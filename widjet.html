@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreedomPay Checkout Example</title>
+    <!-- Вставьте скрипт для подключения виджета -->
+    <script>
+        (function (p, a, y, b, o, x) {
+            o = p.createElement(a);
+            x = p.getElementsByTagName(a)[0];
+            o.async = 1;
+            o.src = 'https://cdn.freedompay.money/widget/pbwidget.js?' + 1 * new Date();
+            x.parentNode.insertBefore(o, x);
+        })(document, 'script');
+    </script>
+</head>
+<body>
+
+<!-- Ваш контент страницы -->
+
+<!-- Ваш код для вызова виджета -->
+<script>
+    function pay(amount) {
+        var data = {
+            token: "XeKT5cW6AsW1ocVkxw8KOsrsCfmlU410",
+            payment: {
+                order: "1",
+                amount: amount,
+                currency: "KZT",
+                description: "Описание заказа",
+                expires_at: "2023-12-12 00:00:00",
+                param1: "string",
+                param2: "string",
+                param3: "string",
+                test: 1, // testing mode
+                options: {
+                    callbacks: {
+                        result_url: "https://my-domain.com/result",
+                        check_url: "https://my-domain.com/check"
+                    },
+                    custom_params: {},
+                    user: {
+                        email: "user@test.com",
+                        phone: "77777777777",
+                    },
+                    receipt_positions: [
+                        {
+                            count: 2,
+                            name: "Коврик для мыши",
+                            tax_type: 3,
+                            price: 1000
+                        },
+                        {
+                            count: 2,
+                            name: "Розетка",
+                            tax_type: 3,
+                            price: 1000
+                        }
+                    ]
+                }
+            },
+            successCallback: function (payment) {
+                // при успешном платеже
+                alert('Заказ номер ' + payment.order + ' успешно оплачен');
+            },
+            errorCallback: function (payment) {
+                // при неуспешном платеже
+                alert('Произошла ошибка при попытке оплаты заказа номер ' + payment.order);
+            }
+        };
+
+        var widget = new PayBox(data);
+        widget.create();
+    }
+</script>
+
+<!-- Ваша кнопка для вызова платежа -->
+<button onclick="pay(200)">Оплатить</button>
+
+</body>
+</html>
